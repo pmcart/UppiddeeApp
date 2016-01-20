@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Login</title>
+
+    <link rel="stylesheet" type="text/css" href="css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="css/framework.css">
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-slider.css">
+    <link rel="shortcut icon" type="image/x-icon" href="images/logo.ico">
+    <link rel="apple-touch-icon" href="images/logo.ico">
+    
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <link href="css/ionicons.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/default.css" rel=stylesheet type="text/css">
+       <link href="css/default.date.css" rel=stylesheet type="text/css">
+    <style>
+        .profilePageHeader {
+            width: 200px;
+            height: 120px;
+            text-align: center !important;
+            display: inline-block;
+            color: white !important;
+        }
+        
+        #userImg {
+            width: 80px;
+            height: 80px;
+            border-radius: 60px;
+            border: 2px solid white;
+
+        }
+        #userImgSelect
+        {
+                 width: 80px;
+            height: 80px;
+            border-radius: 60px;
+            border: 2px solid white;
+                            padding: 15px;
+            color: white !important;
+              margin: 0 auto;
+        }
+        .sliderDivContainer {
+            height: 70px;
+        }
+        
+        .sliderIconLeft {
+            float: left;
+            color: white;
+            font-size: 22px;
+        }
+        
+        .sliderIconRight {
+            float: right;
+            color: white;
+            font-size: 22px;
+        }
+        
+        .valueBox
+        {
+            text-align: center;
+        }
+        
+        .valueText
+        {
+          margin-top: 5px;
+            margin-bottom: 0px;
+        }
+        
+        option
+        {
+            color:black !important;
+        }
+        
+        .profilePageFieldLeft
+        {
+            float: left;
+            width:130px;
+            margin-right: 25px;
+        }
+             .profilePageFieldRight
+        {
+            float: left;
+            width:130px;
+     
+        }
+        
+        .profilePageFieldLeft input
+        {
+            width: 100%;
+        }
+        
+           .profilePageFieldRight input
+        {
+            width: 100%;
+        }
+        
+        .profilePageFieldSet
+        {
+            height: 60px;
+            width: 100%;
+            margin-bottom: 30px;
+        }
+        
+        .picker__select--month, .picker__select--year {
+            height: 35px !important;
+        }
+        
+        .largeIcon
+        {
+                font-size: 40px;
+        }
+        
+        .navbarLogoImg
+        {
+            width:40%;
+        }
+        
+        .topMenu
+        {
+            width: 100%;
+               height: 120px;
+    padding-top: 60px;
+        }
+        
+        .topMenuSection
+        {
+            height: 60px;
+            float:left;
+            width: 25%;
+            background-color: #313131;
+            text-align: center;
+            color: white;
+        }
+        
+        .topMenuSection p
+        {
+             padding-right: 0px;
+        }
+        
+        #fixedMenuBottom
+        {
+            height: 80px;
+            width: 100%;
+         
+            position: fixed;
+            display: none;
+        }
+        
+        .fixedMenuSection
+        {
+            height: 100%;
+            width: 50%;
+            float: left;
+     
+            padding: 20px;
+        }
+        
+        .fixedMenuButton
+        {
+            height: 100%;
+            width: 100%;
+            border: 1px solid white;
+            text-align: center;
+            border-radius: 10px;
+            padding-top: 10px;
+        }
+        
+        .fixedMenuButton p
+        {
+            padding-right: 0px;
+            color: white;
+        }
+        
+     
+    </style>
+
+</head>
+
+<body>
+    
+    <section class="w-section mobile-wrapper" id="signupSection" style="display:none;">
+          <div class="page-content bg-gradient" id="main-stack" data-scroll="0">
+            <div class="body padding">
+                <div class="logo-login"></div>
+
+   
+            </div>
+                         <div class="bottom-section padding">
+                    <div class="w-form">
+
+                        <div>
+                            <label class="label-form light" for="email-field">USERNAME</label>
+                            <input class="w-input input-form light" id="emailInput" type="email" name="email" data-name="email" required="required">
+                            <div class="separator-fields"></div>
+                        </div>
+                        <div>
+                            <label class="label-form light" for="email">PASSWORD</label>
+                            <div class="block-input-combined">
+                                <input class="w-input input-form light left" id="passwordInput" type="password" name="password" data-name="password" required="required">
+                            </div>
+                            <div class="separator-fields"></div>
+                        </div>
+                        <div>
+                            <label class="label-form light" for="email">CONFIRM PASSWORD</label>
+                            <div class="block-input-combined">
+                                <input class="w-input input-form light left" id="passwordInputConfirm" type="password" name="password" data-name="password" required="required">
+                            </div>
+                            <div class="separator-fields"></div>
+                        </div>
+                           <div>
+                            <label class="label-form light" for="email">CHOOSE YOUR ORGANIZATION</label>
+                            <div class="block-input-combined">
+                             <select class="w-input input-form light left" id="companiesDD">
+               
+                            </select>
+                            </div>
+                            <div class="separator-button-input"></div>
+                        </div>
+                        <button class="w-button action-button" value="Sign In" data-wait="Please wait..." id="btnSignUp">Signup
+                        <!--              <div class="separator-button"></div><a class="link-upper" href="signup.html" data-load="1">Don't have an account? <strong class="b-link">Sign Up</strong></a>-->
+
+
+                    </div>
+                </div>
+        </div>
+        <div class="page-content loading-mask" id="new-stack">
+            <div class="loading-icon">
+                <div class="navbar-button-icon icon ion-load-d"></div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="w-section mobile-wrapper" id="loginSection" style="display:none;">
+        <div class="page-content bg-gradient" id="main-stack" data-scroll="0">
+            <div class="body padding">
+                <div class="logo-login"></div>
+
+   
+            </div>
+                         <div class="bottom-section padding">
+                    <div class="w-form">
+
+                        <div>
+                            <label class="label-form light" for="email-field">USERNAME</label>
+                            <input class="w-input input-form light" id="emailInput" type="email" name="email" data-name="email" required="required">
+                            <div class="separator-fields"></div>
+                        </div>
+                        <div>
+                            <label class="label-form light" for="email">PASSWORD</label>
+                            <div class="block-input-combined">
+                                <input class="w-input input-form light left" id="passwordInput" type="password" name="password" data-name="password" required="required"><a class="right-input-link" href="forgot.html" data-load="1">Forgot Password</a>
+                            </div>
+                            <div class="separator-button-input"></div>
+                        </div>
+                        <button class="w-button action-button" value="Sign In" data-wait="Please wait..." id="btnLogin">Login
+                        <!--              <div class="separator-button"></div><a class="link-upper" href="signup.html" data-load="1">Don't have an account? <strong class="b-link">Sign Up</strong></a>-->
+
+
+                    </div>
+                </div>
+        </div>
+        <div class="page-content loading-mask" id="new-stack">
+            <div class="loading-icon">
+                <div class="navbar-button-icon icon ion-load-d"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="w-section mobile-wrapper" id="feedbackSection">
+        <div class="w-nav navbar transparent" data-collapse="all" data-animation="over-left" data-duration="400" data-contain="1" data-easing="ease-out-quint" data-no-scroll="1">
+            <div class="w-container">
+                <nav class="w-nav-menu nav-menu bg-gradient" role="navigation">
+                    <div class="nav-menu-header">
+                        <div class="logo">Uppiddee</div>
+                    </div>
+                    <a class="w-clearfix w-inline-block nav-menu-link">
+                        <div class="icon-list-menu">
+                            <div class="icon ion-home"></div>
+                        </div>
+                        <div class="nav-menu-titles">Home Page</div>
+                    </a>
+                    <a class="w-clearfix w-inline-block nav-menu-link">
+                        <div class="icon-list-menu">
+                            <div class="icon ion-help"></div>
+                        </div>
+                        <div class="nav-menu-titles">About</div>
+                    </a>
+                    <a class="w-clearfix w-inline-block nav-menu-link" id="btnLogout">
+                        <div class="icon-list-menu">
+                            <div class="icon ion-power"></div>
+                        </div>
+                        <div class="nav-menu-titles" >Logout</div>
+                    </a>
+
+
+
+                    <div class="separator-bottom"></div>
+                    <div class="separator-bottom"></div>
+                    <div class="separator-bottom"></div>
+                </nav>
+
+                <div class="wrapper-mask" data-ix="menu-mask"></div>
+                <div class="navbar-title"><img class="navbarLogoImg" src="img/logo.png"></img></div>
+                <div class="w-nav-button navbar-button left" id="menu-button" data-ix="hide-navbar-icons">
+                    <div class="navbar-button-icon home-icon">
+                        <div class="bar-home-icon top"></div>
+                        <div class="bar-home-icon middle"></div>
+                        <div class="bar-home-icon bottom"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="page-content bg-gradient" id="main-stack" data-scroll="0">
+                <div class="topMenu">
+                <div class="topMenuSection">
+                    <i class="icon ion-android-person largeIcon"></i>
+                    <p>Personal</p>
+                    </div>
+                       <div class="topMenuSection">
+                             <i class="icon ion-android-people largeIcon"></i>
+                    <p>Team</p>
+                    </div>
+                       <div class="topMenuSection">
+                             <i class="icon ion-android-stopwatch largeIcon"></i>
+                    <p>Personal</p>
+                    </div>
+                       <div class="topMenuSection">
+                             <i class="icon ion-heart largeIcon"></i>
+                    <p>Personal</p>
+                    </div>
+                </div>
+            <div class="body padding text-centered">
+
+               <!-- <div class="profilePageHeader">
+
+
+                    <img src="img/Aidan.jpg" id="userImg"></img>
+                    <p id="nameField">David O'Neill</p>
+                </div>-->
+
+                <div class="sliderDivContainer">
+                    
+                    <div>
+                          <p class="valueText">Confidence</p>
+                        <div class="icon ion-arrow-left-b sliderIconLeft"></div>
+                        <input class="slider" id="satisfactionSlider" type="text" data-slider-min="1" data-slider-max="10" data-slider-step="1" data-slider-value="5" />
+                        <div class="icon ion-arrow-right-b sliderIconRight"></div>
+                    </div>
+
+                  <div class="valueBox" ><p id="satisfactionValue">5</p></div>
+                </div>
+
+                <div class="sliderDivContainer">
+
+                    <div>
+                              <p class="valueText">Performance</p>
+                        <div class="icon ion-arrow-left-b sliderIconLeft"></div>
+                        <input class="slider" id="peformanceSlider" type="text" data-slider-min="1" data-slider-max="10" data-slider-step="1" data-slider-value="5" />
+                        <div class="icon ion-arrow-right-b sliderIconRight"></div>
+                    </div>
+
+              <div class="valueBox" ><p id="performanceValue">5</p></div>
+                </div>
+
+                <div class="sliderDivContainer">
+                    <div>
+                         <p class="valueText">Motivation</p>
+                        <div class="icon ion-arrow-left-b sliderIconLeft"></div>
+                        <input class="slider" id="motivationSlider" type="text" data-slider-min="1" data-slider-max="10" data-slider-step="1" data-slider-value="5" />
+
+                        <div class="icon ion-arrow-right-b sliderIconRight"></div>
+                    </div>
+                   <div class="valueBox" ><p id="motivationValue">5</p></div>
+                </div>
+
+                <div class="sliderDivContainer">
+                    <div>
+                          <p class="valueText">Mood</p>
+                        <div class="icon ion-arrow-left-b sliderIconLeft"></div>
+                        <input class="slider" id="moodSlider" type="text" data-slider-min="1" data-slider-max="10" data-slider-step="1" data-slider-value="5" />
+                        <div class="icon ion-arrow-right-b sliderIconRight"></div>
+                    </div>
+
+                  <div class="valueBox" ><p id="moodValue">5</p></div>
+                </div>
+
+
+            <button class="w-button action-button" value="Log Feedback" data-wait="Please wait..." id="btnLogFeedback">Submit Feedback</button>
+            </div>
+            
+            <div id="fixedMenuBottom">
+            <div class="fixedMenuSection">
+                
+                <div class="fixedMenuButton">
+                <p>Feedback</p>
+                </div>
+                
+                </div>
+                  <div class="fixedMenuSection">
+                    <div class="fixedMenuButton">
+                <p>Awareness</p>
+                    </div>
+                      
+                </div>
+            </div>
+        </div>
+    </section>
+        
+    <section class="w-section mobile-wrapper" id="userProfileSection" style="display:none;" >
+     
+        <div class="page-content bg-gradient" id="main-stack" data-scroll="0">
+            <div class="body padding text-centered">
+
+                <div class="profilePageHeader">
+                    <h4 class="heading-white">Create Your Profile</h2>
+                    <div id="userImgSelect">
+                                    <i class="icon ion-android-add largeIcon"></i>
+                    </div>
+
+                    <p id="nameField" id="pictureTextLabel">Add your picture</p>
+   
+                </div>
+
+            </div>
+                <div class="body padding">
+
+
+            <div class="profilePageFieldSet">
+                <div class="profilePageFieldLeft">
+                    <p>First Name</p>
+                <input id="firstNameInput" />
+                </div>
+                <div class="profilePageFieldRight">
+                    <p>Last Name</p>
+                <input id="lastNameInput" />
+                </div>
+                
+                
+            </div>
+                             <div class="profilePageFieldSet">
+                <div class="profilePageFieldLeft">
+                    <p>Date of Birth</p>
+                <input id="datePickerDOB" />
+                </div>
+                <div class="profilePageFieldRight">
+                    <p>Gender</p>
+                <select id="genderDD">
+                    <option>Male</option>
+                    <option>Female</option>
+                    </select>
+                </div>
+                
+                
+            </div>
+                             <div class="profilePageFieldSet">
+                <div class="profilePageFieldLeft">
+                    <p>Team</p>
+                           <select id="teamDD">
+                    <option>Team 1</option>
+                    <option>Team 2</option>
+                    </select>
+                </div>
+                <div class="profilePageFieldRight">
+                    <p>Start Date</p>
+                       <input id="datePickerStartDate" />
+        
+                </div>
+                
+                
+            </div>
+                             <div class="profilePageFieldSet">
+                <div class="profilePageFieldLeft">
+                    <p>Relationship Status</p>
+                  <select id="relationshipDD">
+                    <option>Single</option>
+                    <option>Married</option>
+                       <option>In a relationship</option>
+                    </select>
+                </div>
+                <div class="profilePageFieldRight">
+                    <p>No. of Children</p>
+                <input id="noOfChildrenInput" type=number value="0" />
+                </div>
+                
+                
+            </div>
+     
+
+<!--
+                    <input type="file" class="upload" id="FUFile"/><input type="button" value="Upload File"/>-->
+                    <button class="w-button action-button" value="Log Feedback" data-wait="Please wait..." id="btnCreateProfile">Done</button>
+            </div>
+        </div>
+    </section>
+        
+    <script src="js/webfont.js"></script>
+    <script>
+        WebFont.load({
+            google: {
+                families: ["Montserrat:400,700"]
+            }
+        });
+    </script>
+    <script type="text/javascript" src="js/modernizr.js"></script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/picker.js"></script>
+    <script type="text/javascript" src="js/picker.date.js"></script>
+  <script type="text/javascript" src="cordova.js"></script>
+
+    <script type="text/javascript" src="js/framework.js"></script>
+    <script type="text/javascript" src="js/scripts.js"></script>
+    <!--[if lte IE 9]><script src="js/placeholders.min.js"></script><![endif]-->
+    <script type="text/javascript" src="js/bootstrap-slider.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+
+    <script type="text/javascript">
+        app.initialize();
+    </script>
+</body>
+
+</html>
