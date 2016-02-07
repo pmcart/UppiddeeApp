@@ -104,6 +104,20 @@ module.exports = [
         ]
     },
     {
+        "file": "plugins/phonegap-plugin-push/www/push.js",
+        "id": "phonegap-plugin-push.PushNotification",
+        "clobbers": [
+            "PushNotification"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-intercom/www/intercom.js",
+        "id": "cordova-plugin-intercom.Intercom",
+        "clobbers": [
+            "intercom"
+        ]
+    },
+    {
         "file": "plugins/cordova-plugin-file/www/DirectoryEntry.js",
         "id": "cordova-plugin-file.DirectoryEntry",
         "clobbers": [
@@ -259,6 +273,8 @@ module.exports.metadata =
     "cordova-plugin-camera": "1.2.0",
     "cordova-plugin-file-transfer": "1.4.0",
     "com.hiddentao.cordova.filepath": "1.0.0",
+    "phonegap-plugin-push": "1.5.3",
+    "cordova-plugin-intercom": "1.1.4",
     "cordova-plugin-file": "3.0.0"
 }
 // BOTTOM OF METADATA
