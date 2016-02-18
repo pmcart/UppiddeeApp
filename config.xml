@@ -26,6 +26,7 @@
         <preference name="android-installLocation" value="auto" />
         <preference name="intercom-app-id" value="u1rbttyx" />
         <preference name="intercom-ios-api-key" value="ios_sdk-..." />
+        <preference name="deployment-target" value="7.0" />
         <preference name="intercom-android-api-key" value="android_sdk-30b61a4459dfd44ab41deda3cca4b0e51df64032" />
         <gap:plugin name="org.apache.cordova.battery-status" />
         <gap:plugin name="org.apache.cordova.camera" />
