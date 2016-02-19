@@ -93,6 +93,12 @@ var app = {
 
     init: function () {
 
+        var networkState = navigator.connection.type;
+ 
+        if(networkState != Connection.NONE && networkState != Connection.UNKNOWN){
+        alert("Oh dear! You don't seem to have any network connection. Uppiddee requires access to a network connection to function correctly");
+        return;
+        }
         //526088034082
 
         var push = PushNotification.init({
@@ -596,6 +602,14 @@ var app = {
     },
 
     createReports: function (metrics) {
+        
+        var currentMetric = "";
+        var currentMetricGroup = 0;
+        var metricGroupCount =0;
+        
+  
+ 
+        
         for (var i = 0; i < metrics.length; i++) {
             var obj = metrics[i];
 
@@ -609,9 +623,13 @@ var app = {
 
             var template;
 
+           if(currentMetricGroup != metricGroupID)
+            {
+                metricGroupCount++;
+                
+            }
 
-
-            if (metricGroupID == "1") {
+            if (metricGroupCount == "1") {
                 if (metricGroup1Count <= 4) {
                     template = Handlebars.templates['reportSquare'];
                 } else if (metricGroup1Count > 4 && metricGroup1Count <= 8) {
@@ -629,7 +647,7 @@ var app = {
 
                 $("#reportDiv1").prepend(htmlBlock.trim());
             }
-            if (metricGroupID == "2") {
+            if (metricGroupCount == "2") {
                 if (metricGroup2Count <= 4) {
                     template = Handlebars.templates['reportSquare'];
                 } else if (metricGroup2Count > 4 && metricGroup2Count <= 8) {
@@ -647,7 +665,7 @@ var app = {
 
                 $("#reportDiv2").prepend(htmlBlock.trim());
             }
-            if (metricGroupID == "3") {
+            if (metricGroupCount == "3") {
                 if (metricGroup3Count <= 4) {
                     template = Handlebars.templates['reportSquare'];
                 } else if (metricGroup3Count > 4 && metricGroup3Count <= 8) {
@@ -665,7 +683,7 @@ var app = {
 
                 $("#reportDiv3").prepend(htmlBlock.trim());
             }
-            if (metricGroupID == "4") {
+            if (metricGroupCount == "4") {
                 if (metricGroup4Count <= 4) {
                     template = Handlebars.templates['reportSquare'];
                 } else if (metricGroup4Count > 4 && metricGroup4Count <= 8) {
@@ -683,6 +701,8 @@ var app = {
 
                 $("#reportDiv4").prepend(htmlBlock.trim());
             }
+            
+            currentMetricGroup = metricGroupID;
 
             $("#reportMetric" + idValue).click(function () {
                 debugLog("Clicked report square");
@@ -719,14 +739,15 @@ var app = {
     createSliders: function (metrics) {
 
         var currentMetric = "";
-
-
+        var currentMetricGroup = 0;
+        var metricGroupCount =0;
+        
         for (var i = 0; i < metrics.length; i++) {
             var obj = metrics[i];
 
             var metricGroup = obj.MetricGroup;
             var metricGroupID = obj.GroupID;
-
+           
             var originalVal;
 
             var idValue = obj.ID;
@@ -738,8 +759,13 @@ var app = {
                 sliderText: sliderTextValue
             };
             var htmlBlock = template(context);
-
-            if (metricGroupID == "1") {
+            
+            if(currentMetricGroup != metricGroupID)
+            {
+                metricGroupCount++;
+                
+            }
+            if (metricGroupCount == "1") {
 
                 if (metricGroup1Count < 4) {
                     $("#sliderDiv1").find(".subDiv1").prepend(htmlBlock.trim());
@@ -759,7 +785,7 @@ var app = {
 
                 metricGroup1Count++;
             }
-            if (metricGroupID == "2") {
+            if (metricGroupCount == "2") {
                 if (metricGroup2Count < 4) {
                     $("#sliderDiv2").find(".subDiv1").prepend(htmlBlock.trim());
                 }
@@ -778,7 +804,7 @@ var app = {
                 }
                 metricGroup2Count++;
             }
-            if (metricGroupID == "3") {
+            if (metricGroupCount == "3") {
                 if (metricGroup3Count < 4) {
                     $("#sliderDiv3").find(".subDiv1").prepend(htmlBlock.trim());
                 }
@@ -796,7 +822,7 @@ var app = {
                 }
                 metricGroup3Count++;
             }
-            if (metricGroupID == "4") {
+            if (metricGroupCount == "4") {
                 if (metricGroup4Count < 4) {
                     $("#sliderDiv4").find(".subDiv1").prepend(htmlBlock.trim());
                 }
@@ -814,7 +840,8 @@ var app = {
                 }
                 metricGroup4Count++;
             }
-
+            
+            currentMetricGroup = metricGroupID;
             //$(htmlBlock.trim()).prependTo(api.getContentPane()).hide().fadeIn(1000);
             //setTimeout(function () {
 
