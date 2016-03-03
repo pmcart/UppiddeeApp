@@ -14,9 +14,10 @@
 
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
     <link href="css/ionicons.min.css" rel="stylesheet" type="text/css" />
-    <link href="css/default.css" rel=stylesheet type="text/css">
-    <link href="css/default.date.css" rel=stylesheet type="text/css">
-
+    <link href="css/default.css" rel=stylesheet type="text/css" />
+    <link href="css/default.date.css" rel=stylesheet type="text/css"/>
+    <link href="css/sweetalert.css" rel="stylesheet" type="text/css"/>
+    
 
 </head>
 
@@ -177,19 +178,19 @@
             <div class="topMenu">
                 <div class="topMenuSection btnLoadSliders active" value="1">
                     <i class="icon ion-android-person largeIcon"></i>
-                    <p>Personal</p>
+                    <p id="groupHeading1">Personal</p>
                 </div>
                 <div class="topMenuSection btnLoadSliders" value="2">
                     <i class="icon ion-android-people largeIcon"></i>
-                    <p>Team</p>
+                    <p id="groupHeading2">Team</p>
                 </div>
                 <div class="topMenuSection btnLoadSliders" value="3">
                     <i class="icon ion-android-stopwatch largeIcon"></i>
-                    <p>Training</p>
+                    <p id="groupHeading3">Training</p>
                 </div>
                 <div class="topMenuSection btnLoadSliders" value="4">
                     <i class="icon ion-heart largeIcon"></i>
-                    <p>Lifestyle</p>
+                    <p id="groupHeading4">Lifestyle</p>
                 </div>
             </div>
             <div class="bodyFeedback padding text-centered" id="feedbackDiv">
@@ -281,7 +282,7 @@
                 </div>
                 <div class="fixedMenuSection">
                     <div class="fixedMenuButton" id="btnAwareness">
-                        <p>Awareness</p>
+                        <p>Reports</p>
                     </div>
 
                 </div>
@@ -371,7 +372,7 @@
     <script type="text/javascript" src="js/scripts.js"></script>
     <!--[if lte IE 9]><script src="js/placeholders.min.js"></script><![endif]-->
     <script type="text/javascript" src="js/bootstrap-slider.js"></script>
-
+    <script type="text/javascript" src="js/sweetalert.min.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
 
     <script type="text/javascript">

@@ -34,19 +34,20 @@ function debugLog(logStr) {
 
 var sessionObject = {
 
-    emailAddress: "",
-    userID: "",
-    tokenStr: "",
-    databaseString: "",
-    userPicUrl: "",
-    companyID: "",
-    firstname: "",
-    lastname: ""
+    emailAddress: ""
+    , userID: ""
+    , tokenStr: ""
+    , databaseString: ""
+    , userPicUrl: ""
+    , companyID: ""
+    , firstname: ""
+    , lastname: ""
 }
 
 var activationObject = {
-    emailAddress: "",
-    databaseName: ""
+    emailAddress: ""
+    , databaseName: "",
+    companyID:""
 
 }
 var metricGroup1Count = 0;
@@ -54,25 +55,25 @@ var metricGroup2Count = 0;
 var metricGroup3Count = 0;
 var metricGroup4Count = 0;
 var metricGroupToLoad = 1;
+var currentMetricGroup =1;
 var currentPage = 1;
-var currentMetricGroup = 1;
+
 var selectedView = 1;
 
 var app = {
 
-    sliders: [],
-    satSlider: null,
-    perfSlider: null,
-    motivationSlider: null,
-    moodSlider: null,
-    userId: null,
-    tokenStr: null,
-    databaseString: null,
-    pictureSource: null,
-    destinationType: null,
-    fileSystemObject: null,
-    fileURLLink: null,
-    // Application Constructor
+    sliders: []
+    , satSlider: null
+    , perfSlider: null
+    , motivationSlider: null
+    , moodSlider: null
+    , userId: null
+    , tokenStr: null
+    , databaseString: null
+    , pictureSource: null
+    , destinationType: null
+    , fileSystemObject: null
+    , fileURLLink: null, // Application Constructor
     initialize: function () {
         this.bindEvents();
     },
@@ -83,34 +84,31 @@ var app = {
     // Bind any events that are required on startup. Common events are:
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function () {
-        document.addEventListener('deviceready', this.onDeviceReady,
-            false);
-    },
-    // deviceready Event Handler
+        document.addEventListener('deviceready', this.onDeviceReady
+            , false);
+    }, // deviceready Event Handler
     //
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicitly call 'app.receivedEvent(...);'
 
     init: function () {
 
-        var networkState = navigator.connection.type;
- 
-        if(networkState != Connection.NONE && networkState != Connection.UNKNOWN){
-        alert("Oh dear! You don't seem to have any network connection. Uppiddee requires access to a network connection to function correctly");
-        return;
-        }
+        var networkState = window.navigator.onLine;
+
+  
+
         //526088034082
 
         var push = PushNotification.init({
             "android": {
                 "senderID": "526088034082"
-            },
-            "ios": {
-                "alert": "true",
-                "badge": "true",
-                "sound": "true"
-            },
-            "windows": {}
+            }
+            , "ios": {
+                "alert": "true"
+                , "badge": "true"
+                , "sound": "true"
+            }
+            , "windows": {}
         });
 
         push.on('registration', function (data) {
@@ -119,7 +117,7 @@ var app = {
         });
 
         push.on('notification', function (data) {
-            alert("New Push");
+            //alert("New Push");
         });
 
         push.on('error', function (e) {
@@ -147,12 +145,12 @@ var app = {
         }
 
         $('#datePickerDOB').pickadate({
-            selectMonths: true,
-            selectYears: true,
-            format: 'dd/mm/yyyy',
-            min: new Date(1910, 10, 10),
-            max: true,
-            selectYears: 80
+            selectMonths: true
+            , selectYears: true
+            , format: 'dd/mm/yyyy'
+            , min: new Date(1910, 10, 10)
+            , max: true
+            , selectYears: 80
         })
 
 
@@ -235,31 +233,41 @@ var app = {
 
                                 $.when(app.uppiddee_getMetrics(sessionObject.userID, sessionObject.databaseString)).done(function (dataReturned, status, jqXHRObj) {
                                     $('.loading-mask').addClass('stop-loading');
-                                    app.uppiddee_intercomInit(sessionObject.firstname + " " + sessionObject.lastname, sessionObject.emailAddress);
+
+                               
+                                        $.when(app.uppiddee_checkTerms(sessionObject.userID, sessionObject.databaseString)).done(function (dataReturned, status, jqXHRObj) {
+                             app.uppiddee_intercomInit(sessionObject.firstname + " " + sessionObject.lastname, sessionObject.emailAddress);
+                                    
+                }).fail(function (jqXHR, textStatus) {
+
+                });
+
                                 }).fail(function (jqXHR, textStatus) {
-                                    alert("Sorry there was a problem attempting to log you in.");
+
+                                    swal("Oops!", "Sorry there was a problem attempting to log you in.", "error");
                                     $('.loading-mask').addClass('stop-loading');
                                 });
 
                             }).fail(function (jqXHR, textStatus) {
-                                alert("Sorry there was a problem attempting to log you in.");
+                                swal("Oops!", "Sorry there was a problem attempting to log you in.", "error");
                                 $('.loading-mask').addClass('stop-loading');
                             });
 
                         }).fail(function (jqXHR, textStatus) {
-                            alert("Sorry there was a problem attempting to log you in.");
+                            swal("Oops!", "Sorry there was a problem attempting to log you in.", "error");
                             $('.loading-mask').addClass('stop-loading');
                         });
                     }).fail(function (jqXHR, textStatus) {
-                        alert("Sorry there was a problem attempting to log you in.");
+                        swal("Oops!", "Sorry there was a problem attempting to log you in.", "error");
                         $('.loading-mask').addClass('stop-loading');
                     });
                 }).fail(function (jqXHR, textStatus) {
-                    alert("Sorry there was a problem attempting to log you in.");
+                    swal("Oops!", "Sorry there was a problem attempting to log you in.", "error");
                     $('.loading-mask').addClass('stop-loading');
                 });
             } else {
-                alert("Please enter a valid username and password.");
+
+                swal("Oops!", "Please enter a valid username and password.", "error");
             }
 
         });
@@ -395,7 +403,7 @@ var app = {
                var relationshipValue = $('#relationshipDD').find(":selected").val();
                var noOfChildrenValue = $("#noOfChildrenInput").val();*/
 
-            app.uppiddee_createprofile(sessionObject.databaseString, sessionObject.emailAddress, sessionObject.userID, sessionObject.companyID, firstNameValue, lastNameValue, dobValue, genderValue, teamValue, sessionObject.userPicUrl);
+            app.uppiddee_createprofile(sessionObject.databaseString, sessionObject.emailAddress, sessionObject.userID, $('#companiesDDLogin').find(":selected").attr("companyID"), firstNameValue, lastNameValue, dobValue, genderValue, teamValue, sessionObject.userPicUrl);
 
         });
 
@@ -433,42 +441,45 @@ var app = {
 
                                     $.when(app.uppiddee_getuserprofiles(sessionObject.userID, sessionObject.databaseString)).done(function (dataReturned, status, jqXHRObj) {
                                         $('.loading-mask').addClass('stop-loading');
-                                        app.uppiddee_intercomInit(sessionObject.firstname + " " + sessionObject.lastname, sessionObject.emailAddress);
+
+                                        
                                     }).fail(function (jqXHR, textStatus) {
-                                        alert("Sorry there was a problem attempting to sign you up.");
+                                        swal("Oops!", "Sorry there was a problem attempting to sign you up.", "error");
+
                                         $("#btnSignUp").html("Sign up");
                                         $('.loading-mask').addClass('stop-loading');
                                     });
 
 
                                 }).fail(function (jqXHR, textStatus) {
-                                    alert("Sorry there was a problem attempting to sign you up.");
+                                    swal("Oops!", "Sorry there was a problem attempting to sign you up.", "error");
                                     $("#btnSignUp").html("Sign up");
                                     $('.loading-mask').addClass('stop-loading');
                                 });
                             }).fail(function (jqXHR, textStatus) {
-                                alert("Sorry there was a problem attempting to sign you up.");
+                                swal("Oops!", "Sorry there was a problem attempting to sign you up.", "error");
                                 $("#btnSignUp").html("Sign up");
                                 $('.loading-mask').addClass('stop-loading');
                             });
                         }).fail(function (jqXHR, textStatus) {
-                            alert("Sorry there was a problem attempting to sign you up.");
+                            swal("Oops!", "Sorry there was a problem attempting to sign you up.", "error");
                             $("#btnSignUp").html("Sign up");
                             $('.loading-mask').addClass('stop-loading');
                         });
 
                     }).fail(function (jqXHR, textStatus) {
-                        alert("Sorry there was a problem attempting to sign you up.");
+                        swal("Oops!", "Sorry there was a problem attempting to sign you up.", "error");
                         $("#btnSignUp").html("Sign up");
                         $('.loading-mask').addClass('stop-loading');
                     });
                 } else {
-                    alert("Your passwords do not match. Please ensure they match.");
+                    swal("Oops!", "Sorry there was a problem attempting to sign you up.", "error");
                     $("#btnSignUp").html("Sign up");
                     $('.loading-mask').addClass('stop-loading');
                 }
             } else {
-                alert("Please ensure you've filled in all the available fields");
+
+                swal("Oops!", "Please ensure you've filled in all the available fields", "error");
             }
         });
 
@@ -481,8 +492,11 @@ var app = {
         $("#btnLogout").click(function () {
             ////alert("button clicked");
             window.localStorage.removeItem("uppiddee_token");
-            navigator.app.exitApp();
-
+            //navigator.app.exitApp();
+            $(".w-section").hide();
+            $("#loginSection").show();
+            //Intercom('shutdown');
+            window.Intercom('shutdown');
         });
 
 
@@ -536,12 +550,12 @@ var app = {
 
         $.ajax({
             url: "http://uppiddeeapi.azurewebsites.net/api/test?emailAddress=" +
-                emailAddress + "&" + "databaseString=" + databaseString,
-            type: 'GET',
-            crossDomain: true,
-            headers: {
-                "Accept": "application/json",
-                "Authorization": "Bearer " + tokenStr
+                emailAddress + "&" + "databaseString=" + databaseString
+            , type: 'GET'
+            , crossDomain: true
+            , headers: {
+                "Accept": "application/json"
+                , "Authorization": "Bearer " + tokenStr
             },
 
             success: function (data) {
@@ -564,18 +578,20 @@ var app = {
                         if (data[0].firstname != null) {
                             app.uppiddee_getMetrics(sessionObject.userID, sessionObject.databaseString);
                             app.switchView("signupSection", "feedbackSection");
+                             app.uppiddee_intercomInit(sessionObject.firstname + " " + sessionObject.lastname, sessionObject.emailAddress);
                         } else {
                             app.uppiddee_getDepartments(sessionObject.databaseString);
-                            app.switchView("signupSection", "userProfileSection");
+                            //app.switchView("signupSection", "userProfileSection");
+                            app.switchView("signupSection", "loginSection");
                         }
 
-                        app.uppiddee_intercomInit(sessionObject.firstname + " " + sessionObject.lastname, sessionObject.emailAddress);
+                       
 
                     }
                 }
 
-            },
-            error: function (request, error) {
+            }
+            , error: function (request, error) {
                 debugLog("No Token verified");
                 app.switchView("signupSection", "signupSection");
             }
@@ -603,13 +619,23 @@ var app = {
 
     createReports: function (metrics) {
         
+        $("#reportDiv1").empty();
+         $("#reportDiv2").empty();
+         $("#reportDiv3").empty();
+         $("#reportDiv4").empty();
+ metricGroup1Count = 0;
+ metricGroup2Count = 0;
+ metricGroup3Count = 0;
+ metricGroup4Count = 0;
+
+
         var currentMetric = "";
         var currentMetricGroup = 0;
-        var metricGroupCount =0;
-        
-  
- 
-        
+        var metricGroupCount = 0;
+
+
+
+
         for (var i = 0; i < metrics.length; i++) {
             var obj = metrics[i];
 
@@ -623,10 +649,9 @@ var app = {
 
             var template;
 
-           if(currentMetricGroup != metricGroupID)
-            {
+            if (currentMetricGroup != metricGroupID) {
                 metricGroupCount++;
-                
+
             }
 
             if (metricGroupCount == "1") {
@@ -640,10 +665,18 @@ var app = {
                     template = Handlebars.templates['reportSmall'];
                 }
                 var context = {
-                    ID: idValue,
-                    reportTitle: sliderTextValue
+                    ID: idValue
+                    , reportTitle: sliderTextValue
                 };
-                var htmlBlock = template(context);
+                var htmlBlock = ""; 
+                      try {
+                       htmlBlock = template(context);
+        } catch (err) {
+            //alert(err.message);
+            debugLog(err);
+        }
+
+      
 
                 $("#reportDiv1").prepend(htmlBlock.trim());
             }
@@ -658,10 +691,16 @@ var app = {
                     template = Handlebars.templates['reportSmall'];
                 }
                 var context = {
-                    ID: idValue,
-                    reportTitle: sliderTextValue
+                    ID: idValue
+                    , reportTitle: sliderTextValue
                 };
-                var htmlBlock = template(context);
+                     var htmlBlock = ""; 
+                      try {
+                       htmlBlock = template(context);
+        } catch (err) {
+            //alert(err.message);
+            debugLog(err);
+        }
 
                 $("#reportDiv2").prepend(htmlBlock.trim());
             }
@@ -676,10 +715,16 @@ var app = {
                     template = Handlebars.templates['reportSmall'];
                 }
                 var context = {
-                    ID: idValue,
-                    reportTitle: sliderTextValue
+                    ID: idValue
+                    , reportTitle: sliderTextValue
                 };
-                var htmlBlock = template(context);
+                        var htmlBlock = ""; 
+                      try {
+                       htmlBlock = template(context);
+        } catch (err) {
+            //alert(err.message);
+            debugLog(err);
+        }
 
                 $("#reportDiv3").prepend(htmlBlock.trim());
             }
@@ -694,14 +739,20 @@ var app = {
                     template = Handlebars.templates['reportSmall'];
                 }
                 var context = {
-                    ID: idValue,
-                    reportTitle: sliderTextValue
+                    ID: idValue
+                    , reportTitle: sliderTextValue
                 };
-                var htmlBlock = template(context);
+                      var htmlBlock = ""; 
+                      try {
+                       htmlBlock = template(context);
+        } catch (err) {
+            //alert(err.message);
+            debugLog(err);
+        }
 
                 $("#reportDiv4").prepend(htmlBlock.trim());
             }
-            
+
             currentMetricGroup = metricGroupID;
 
             $("#reportMetric" + idValue).click(function () {
@@ -737,17 +788,21 @@ var app = {
     },
 
     createSliders: function (metrics) {
-
+        
+        $(".subDiv1").empty();
+         $(".subDiv2").empty();
+         $(".subDiv3").empty();
+         $(".subDiv4").empty();
         var currentMetric = "";
         var currentMetricGroup = 0;
-        var metricGroupCount =0;
-        
+        var metricGroupCount = 0;
+
         for (var i = 0; i < metrics.length; i++) {
             var obj = metrics[i];
 
             var metricGroup = obj.MetricGroup;
             var metricGroupID = obj.GroupID;
-           
+
             var originalVal;
 
             var idValue = obj.ID;
@@ -755,15 +810,14 @@ var app = {
 
             var template = Handlebars.templates['feedbackSlider'];
             var context = {
-                ID: idValue,
-                sliderText: sliderTextValue
+                ID: idValue
+                , sliderText: sliderTextValue
             };
             var htmlBlock = template(context);
-            
-            if(currentMetricGroup != metricGroupID)
-            {
+
+            if (currentMetricGroup != metricGroupID) {
                 metricGroupCount++;
-                
+                $("#groupHeading" + metricGroupCount).html(metricGroup);
             }
             if (metricGroupCount == "1") {
 
@@ -840,7 +894,7 @@ var app = {
                 }
                 metricGroup4Count++;
             }
-            
+
             currentMetricGroup = metricGroupID;
             //$(htmlBlock.trim()).prependTo(api.getContentPane()).hide().fadeIn(1000);
             //setTimeout(function () {
@@ -907,41 +961,49 @@ var app = {
     uppiddee_createprofile: function (databaseString, emailAddress, userId, companyID, firstNameValue, lastNameValue, dobValue, genderValue, teamValue, picURL) {
         debugLog("Calling uppiddee_createprofile with databaseString == " + databaseString);
         var dataBody = {
-            databaseString: databaseString,
-            emailAddress: emailAddress,
-            userId: userId,
-            companyID: companyID,
-            firstName: firstNameValue,
-            lastName: lastNameValue,
-            dateOfBirth: dobValue,
-            gender: genderValue,
-            team: teamValue,
-            picURL: picURL
+            databaseString: databaseString
+            , emailAddress: emailAddress
+            , userId: userId
+            , companyID: companyID
+            , firstName: firstNameValue
+            , lastName: lastNameValue
+            , dateOfBirth: dobValue
+            , gender: genderValue
+            , team: teamValue
+            , picURL: picURL
         };
 
-        $("#btnCreateProfile").html("Creating your profile");
-
+       
         $.support.cors = true;
         $.ajax({
-            url: 'http://uppiddeeapi.azurewebsites.net/api/testCreateProfile',
-            type: 'POST',
-            crossDomain: true,
-            headers: {
+            url: 'http://uppiddeeapi.azurewebsites.net/api/testCreateProfile'
+            , type: 'POST'
+            , crossDomain: true
+            , headers: {
                 "Authorization": "Bearer " + sessionObject.tokenStr
-            },
-            contentType: "application/json",
-            dataType: "json",
-            data: JSON.stringify(dataBody),
-            success: function (data) {
+            }
+            , contentType: "application/json"
+            , dataType: "json"
+            , data: JSON.stringify(dataBody)
+            , success: function (data) {
                 debugLog("Created Profile ok");
                 app.switchView("userProfileSection", "feedbackSection");
+                
                 $.when(app.uppiddee_getMetrics(sessionObject.userID, sessionObject.databaseString)).done(function (dataReturned, status, jqXHRObj) {
-
+                        
+                     $.when(app.uppiddee_checkTerms(sessionObject.userID, sessionObject.databaseString)).done(function (dataReturned, status, jqXHRObj) {
+                       
+                app.uppiddee_intercomInit(sessionObject.firstname + " " + sessionObject.lastname, sessionObject.emailAddress);
                 }).fail(function (jqXHR, textStatus) {
 
                 });
-            },
-            error: function (request, error) {
+                }).fail(function (jqXHR, textStatus) {
+
+                });
+               
+
+            }
+            , error: function (request, error) {
                 debugLog("Failed to create profile");
             }
         });
@@ -951,19 +1013,91 @@ var app = {
         debugLog("Getting metrics");
         return $.ajax({
             url: "http://uppiddeeapi.azurewebsites.net/api/testGetMetrics?userID=" +
-                userID + "&" + "databaseString=" + databaseString,
-            type: 'GET',
-            crossDomain: true,
-            headers: {
+                userID + "&" + "databaseString=" + databaseString
+            , type: 'GET'
+            , crossDomain: true
+            , headers: {
                 "Authorization": "Bearer " + sessionObject.tokenStr
-            },
-            success: function (data) {
+            }
+            , success: function (data) {
                 debugLog(data);
                 app.createSliders(data);
                 app.createReports(data);
                 $("#btnLogFeedback").show();
-            },
-            error: function (request, error) {
+            }
+            , error: function (request, error) {
+                //alert("Get Companies Failed");
+            }
+        });
+    },
+
+     uppiddee_updateTerms: function (userID, databaseString) {
+        debugLog("Checking if Terms were accepted");
+        return $.ajax({
+            url: "http://uppiddeeapi.azurewebsites.net/api/testUpdateTerms?userID=" +
+                userID + "&" + "databaseString=" + databaseString
+            , type: 'POST'
+            , crossDomain: true
+            , headers: {
+                "Authorization": "Bearer " + sessionObject.tokenStr
+            }
+            , success: function (data) {
+               
+            }
+            , error: function (request, error) {
+                     debugLog("Error showing terms " + error);
+                //alert("Get Companies Failed");
+            }
+        });
+    },
+    uppiddee_checkTerms: function (userID, databaseString) {
+        debugLog("Checking if Terms were accepted");
+        return $.ajax({
+            url: "http://uppiddeeapi.azurewebsites.net/api/testGetTerms?userID=" +
+                userID + "&" + "databaseString=" + databaseString
+            , type: 'POST'
+            , crossDomain: true
+            , headers: {
+                "Authorization": "Bearer " + sessionObject.tokenStr
+            }
+            , success: function (data) {
+                debugLog("SHow terms " + data);
+                      var welcomeText = "Welcome to Uppiddee. Uppiddee allows you to leave real-time feedback to improve your mental wellbeing, performance and self-awareness." + " The information and content in Uppiddee is not intended nor implied to be a substitute for professional medical advice. It is provided for informational purposes only" + " and Uppiddee does not offer medical or any other advice. You must assume full responsibility for how you choose to use the information and content. Nothing contained in" + " Uppiddee is intended to be used for medical diagnosis or treatment. If you are experiencing any medical difficulties, please contact a qualified medical professional." + " Explore our platform at your convenience. For today, why not leave feedback using the four headings above?" + " If you have any questions, you can contact us by emailing support@uppiddee.com."
+
+        +" By using Uppiddee, you agree to our Terms and Conditions available at www.uppiddee.com/legal.";
+                
+                if(data != "True")
+                {
+                    
+             
+                swal({
+                        title: ""
+                        , imageUrl: "img/logoBlack.png"
+                        , text: welcomeText,
+
+                        showCancelButton: true
+                        , confirmButtonColor: "#DD6B55"
+                        , cancelButtonText: "I do not agree!"
+                        , confirmButtonText: "I agree"
+                        , closeOnConfirm: true
+                        , closeOnCancel: true
+                    }
+                    , function (isConfirm) {
+                        if (isConfirm) {
+                        app.uppiddee_updateTerms(userID,databaseString);
+                        } else {
+                            window.localStorage.removeItem("uppiddee_token");
+                            //navigator.app.exitApp();
+                            $(".w-section").hide();
+                            $("#loginSection").show();
+                            //Intercom('shutdown');
+                            window.Intercom('shutdown');
+                        }
+                    });
+                }
+            }
+            , error: function (request, error) {
+                     debugLog("Error showing terms " + error);
                 //alert("Get Companies Failed");
             }
         });
@@ -973,17 +1107,17 @@ var app = {
         debugLog("Getting metric by id --- " + metricID);
         return $.ajax({
             url: "http://uppiddeeapi.azurewebsites.net/api/testGetReport?userID=" +
-                userID + "&" + "metricID=" + metricID + "&" + "databaseString=" + databaseString,
-            type: 'GET',
-            crossDomain: true,
-            headers: {
+                userID + "&" + "metricID=" + metricID + "&" + "databaseString=" + databaseString
+            , type: 'GET'
+            , crossDomain: true
+            , headers: {
                 "Authorization": "Bearer " + sessionObject.tokenStr
-            },
-            success: function (data) {
+            }
+            , success: function (data) {
                 debugLog(data);
                 app.createReport(data, metricText);
-            },
-            error: function (request, error) {
+            }
+            , error: function (request, error) {
                 //alert("Get Companies Failed");
             }
         });
@@ -1023,10 +1157,10 @@ var app = {
             debugLog(sliderValue + " --- " + metricID);
 
             var feedbackObj = {
-                userID: sessionObject.userID.toString(),
-                databaseString: sessionObject.databaseString,
-                value: sliderValue,
-                metricID: metricID
+                userID: sessionObject.userID.toString()
+                , databaseString: sessionObject.databaseString
+                , value: sliderValue
+                , metricID: metricID
             }
 
             feedbackArray.push(feedbackObj);
@@ -1042,24 +1176,24 @@ var app = {
      performanceValue: app.perfSlider.slider('getValue').toString()
  };*/
 
-        $("#btnLogFeedback").html("Logging Feeback");
+        $("#btnLogFeedback").html("Logging Feedback");
         $.ajax({
-            url: 'http://uppiddeeapi.azurewebsites.net/api/testFeedback',
-            type: 'POST',
-            crossDomain: true,
-            headers: {
+            url: 'http://uppiddeeapi.azurewebsites.net/api/testFeedback'
+            , type: 'POST'
+            , crossDomain: true
+            , headers: {
                 "Authorization": "Bearer " + sessionObject.tokenStr
-            },
-            contentType: "application/json",
-            dataType: "json",
-            data: JSON.stringify(feedbackArray),
-            success: function (data) {
+            }
+            , contentType: "application/json"
+            , dataType: "json"
+            , data: JSON.stringify(feedbackArray)
+            , success: function (data) {
 
                 $("#btnLogFeedback").html("Submit Feedback");
-                alert("Thanks for submitting feedback");
-            },
-            error: function (request, error) {
-                alert("Sorry there was a problem submitting feedback!");
+                swal("Great", "Thanks for submitting feedback", "success");
+            }
+            , error: function (request, error) {
+                swal("Oops!", "Sorry there was a problem submitting feedback", "error");
             }
         });
     },
@@ -1069,13 +1203,13 @@ var app = {
         debugLog("Getting companies");
 
         $.ajax({
-            url: "http://uppiddeeapi.azurewebsites.net/api/testGetCompanies",
-            type: 'GET',
-            crossDomain: true,
-            headers: {
+            url: "http://uppiddeeapi.azurewebsites.net/api/testGetCompanies"
+            , type: 'GET'
+            , crossDomain: true
+            , headers: {
                 "Accept": "application/json"
-            },
-            success: function (data) {
+            }
+            , success: function (data) {
 
                 debugLog(data);
 
@@ -1096,8 +1230,8 @@ var app = {
                     }
                 });
 
-            },
-            error: function (request, error) {
+            }
+            , error: function (request, error) {
                 //alert("Get Companies Failed");
             }
         });
@@ -1107,21 +1241,21 @@ var app = {
         debugLog("Getting departments");
         $.ajax({
             url: "http://uppiddeeapi.azurewebsites.net/api/testGetDepartments?databaseString=" +
-                databaseString,
-            type: 'GET',
-            crossDomain: true,
-            headers: {
-                "Accept": "application/json",
-                "Authorization": "Bearer " + sessionObject.tokenStr
-            },
-            success: function (data) {
+                databaseString
+            , type: 'GET'
+            , crossDomain: true
+            , headers: {
+                "Accept": "application/json"
+                , "Authorization": "Bearer " + sessionObject.tokenStr
+            }
+            , success: function (data) {
                 debugLog(data);
 
                 for (var i = 0; i < data.length; i++) {
                     $("#teamDD").append("<option companyID='" + data[i].CompanyID + "' value='" + data[i].ID + "'>" + data[i].Description + "</option>"); //<option value="company1">LYIT</option>
                 }
-            },
-            error: function (request, error) {
+            }
+            , error: function (request, error) {
                 //alert("Get Companies Failed");
             }
         });
@@ -1136,16 +1270,16 @@ var app = {
 
         $.support.cors = true;
         return $.ajax({
-            url: 'http://uppiddeeapi.azurewebsites.net/token',
-            type: 'POST',
-            crossDomain: true,
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            data: "grant_type=password&username=" +
-                emailAddress + "&password=" + passwordText,
-            success: function (data) {
+            url: 'http://uppiddeeapi.azurewebsites.net/token'
+            , type: 'POST'
+            , crossDomain: true
+            , headers: {
+                "Accept": "application/json"
+                , "Content-Type": "application/x-www-form-urlencoded"
+            }
+            , data: "grant_type=password&username=" +
+                emailAddress + "&password=" + passwordText
+            , success: function (data) {
                 var tokenStr = data.access_token;
 
                 sessionObject.emailAddress = emailAddress;
@@ -1162,8 +1296,8 @@ var app = {
                 //app.navi.pushPage('page.html');
                 debugLog("Got the token");
 
-            },
-            error: function (request, error) {
+            }
+            , error: function (request, error) {
                 //$("#btnLogin").html("Failed");
                 //alert("Login Failed");
                 debugLog("Failed to get Token");
@@ -1179,13 +1313,13 @@ var app = {
 
         return $.ajax({
             url: "http://uppiddeeapi.azurewebsites.net/api/testGetDBString?databaseID=" +
-                databaseID + "&" + "companyID=" + companyID,
-            type: 'GET',
-            crossDomain: true,
-            headers: {
+                databaseID + "&" + "companyID=" + companyID
+            , type: 'GET'
+            , crossDomain: true
+            , headers: {
                 "Accept": "application/json"
-            },
-            success: function (data) {
+            }
+            , success: function (data) {
                 debugLog("uppiddee_getDatabaseString successful");
                 sessionObject.databaseString = data[0].Description;
                 activationObject.databaseName = companyName;
@@ -1196,8 +1330,8 @@ var app = {
                 $("#btnSignUp").html("Signing Up");
 
 
-            },
-            error: function (request, error) {
+            }
+            , error: function (request, error) {
                 debugLog("uppiddee_getDatabaseString failed");
 
             }
@@ -1210,8 +1344,8 @@ var app = {
 
 
         window.Intercom('boot', {
-            app_id: "u1rbttyx",
-            name: nameValue, // Full name
+            app_id: "u1rbttyx"
+            , name: nameValue, // Full name
             email: emailValue, // Email address
             created_at: Math.round((new Date()).getTime() / 1000), // Signup date as a Unix timestamp
             widget: {
@@ -1225,9 +1359,9 @@ var app = {
     uppiddee_signup: function (databaseString, emailAddress, passwordText) {
         debugLog("Calling uppiddee_signup with databaseString == " + databaseString);
         var dataBody = {
-            databaseString: databaseString,
-            emailAddress: emailAddress,
-            passwordText: passwordText,
+            databaseString: databaseString
+            , emailAddress: emailAddress
+            , passwordText: passwordText,
 
         };
 
@@ -1235,24 +1369,25 @@ var app = {
 
         $.support.cors = true;
         return $.ajax({
-            url: 'http://uppiddeeapi.azurewebsites.net/api/testSignupUser',
-            type: 'POST',
-            crossDomain: true,
-            headers: {
+            url: 'http://uppiddeeapi.azurewebsites.net/api/testSignupUser'
+            , type: 'POST'
+            , crossDomain: true
+            , headers: {
                 "Authorization": "Bearer " + sessionObject.tokenStr
-            },
-            contentType: "application/json",
-            dataType: "json",
-            data: JSON.stringify(dataBody),
-            success: function (data) {
+            }
+            , contentType: "application/json"
+            , dataType: "json"
+            , data: JSON.stringify(dataBody)
+            , success: function (data) {
                 debugLog("Signed up ok");
                 app.switchView("signupSection", "userProfileSection");
                 sessionObject.userID = data[0].UserID;
                 sessionObject.companyID = data[0].CompanyID;
+                
                 window.localStorage.setItem("uppiddee_previousactivation", JSON.stringify(activationObject));
                 window.localStorage.setItem("uppiddee_token", JSON.stringify(sessionObject));
-            },
-            error: function (request, error) {
+            }
+            , error: function (request, error) {
                 debugLog("Failed to sign up");
             }
         });
@@ -1260,34 +1395,34 @@ var app = {
 
     uppiddee_login: function (databaseString, emailAddress, passwordText) {
 
-        $("#btnLogin").html("Logging In");
+
         //debugLog("Calling uppiddee_signup with databaseString == " + databaseString);
         var dataBody = {
-            databaseString: databaseString,
-            emailAddress: emailAddress,
-            passwordText: passwordText,
+            databaseString: databaseString
+            , emailAddress: emailAddress
+            , passwordText: passwordText,
 
         };
 
         $.support.cors = true;
         return $.ajax({
-            url: 'http://uppiddeeapi.azurewebsites.net/api/testVerifyUser',
-            type: 'POST',
-            crossDomain: true,
-            headers: {
+            url: 'http://uppiddeeapi.azurewebsites.net/api/testVerifyUser'
+            , type: 'POST'
+            , crossDomain: true
+            , headers: {
                 "Authorization": "Bearer " + sessionObject.tokenStr
-            },
-            contentType: "application/json",
-            dataType: "json",
-            data: JSON.stringify(dataBody),
-            success: function (data) {
+            }
+            , contentType: "application/json"
+            , dataType: "json"
+            , data: JSON.stringify(dataBody)
+            , success: function (data) {
                 debugLog("Logged in ok");
                 app.switchView("loginSection", "feedbackSection");
                 window.localStorage.setItem("uppiddee_previousactivation", JSON.stringify(activationObject));
-            },
-            error: function (request, error) {
+            }
+            , error: function (request, error) {
                 debugLog("Failed to login");
-                alert("Sorry. We've encountered an error trying to log you in. Please check your username and password are correct.");
+                swal("Sorry", "We've encountered an error trying to log you in. Please check your username and password are correct.", "error");
             }
         });
     },
@@ -1296,29 +1431,42 @@ var app = {
 
         return $.ajax({
             url: "http://uppiddeeapi.azurewebsites.net/api/testGetUserProfile?emailAddress=" +
-                emailAddress + "&" + "databaseString=" + databaseString,
-            type: 'GET',
-            crossDomain: true,
-            headers: {
-                "Accept": "application/json",
-                "Authorization": "Bearer " + sessionObject.tokenStr
-            },
-            success: function (data) {
+                emailAddress + "&" + "databaseString=" + databaseString
+            , type: 'GET'
+            , crossDomain: true
+            , headers: {
+                "Accept": "application/json"
+                , "Authorization": "Bearer " + sessionObject.tokenStr
+            }
+            , success: function (data) {
                 //$("#nameField").html(data[0].firstname +
                 //    " " + data[0].lastname);
                 //$("#userImg").attr("src", data[0].picURL);
-
-                sessionObject.userID = data[0].userid;
+                try {
+      sessionObject.userID = data[0].userid;
                 sessionObject.companyID = data[0].CompanyID;
                 sessionObject.firstname = data[0].firstname;
                 sessionObject.lastname = data[0].lastname;
+}
+catch(err) {
+
+}
+               
                 debugLog("Just called getuserprofiles and userid == " + sessionObject.userID);
                 window.localStorage.setItem("uppiddee_token", JSON.stringify(sessionObject));
+                      if (sessionObject.firstname == null) {
 
-                //
+                                        app.uppiddee_getDepartments(sessionObject.databaseString);
+                                        app.switchView("feedbackSection", "userProfileSection");
+                                        //app.switchView("signupSection", "loginSection");
+                                    }
+                else
+                {
+                
+                }
 
-            },
-            error: function (request, error) {
+            }
+            , error: function (request, error) {
                 //alert("Get User Profile Failed");
             }
         });
@@ -1327,9 +1475,9 @@ var app = {
 
     getPhoto: function (source) {
         navigator.camera.getPicture(app.onPhotoURISuccess, app.onFail, {
-            quality: 50,
-            destinationType: app.destinationType.NATIVE_URI,
-            sourceType: source
+            quality: 50
+            , destinationType: app.destinationType.NATIVE_URI
+            , sourceType: source
         });
 
     },
@@ -1365,6 +1513,7 @@ document.addEventListener("backbutton", handleBackButton, false);
 
 function handleBackButton() {
     console.log("Back Button Pressed!");
+     window.Intercom('shutdown');
     navigator.app.exitApp();
 }
 
@@ -1525,15 +1674,15 @@ reader.onloadend = function (evt) {
         var uri = submitUri + '&comp=block&blockid=' + blockIds[blockIds.length - 1];
         var requestData = new Uint8Array(evt.target.result);
         $.ajax({
-            url: uri,
-            type: "PUT",
-            data: requestData,
-            processData: false,
-            beforeSend: function (xhr) {
+            url: uri
+            , type: "PUT"
+            , data: requestData
+            , processData: false
+            , beforeSend: function (xhr) {
                 xhr.setRequestHeader('x-ms-blob-type', 'BlockBlob');
 
-            },
-            success: function (data, status) {
+            }
+            , success: function (data, status) {
                 debugLog(data);
                 debugLog(status);
                 bytesUploaded += requestData.length;
@@ -1541,8 +1690,8 @@ reader.onloadend = function (evt) {
                 //$("#fileUploadProgress").text(percentComplete + " %");
                 debugLog(percentComplete + " %");
                 uploadFileInBlocks();
-            },
-            error: function (xhr, desc, err) {
+            }
+            , error: function (xhr, desc, err) {
                 debugLog(desc);
                 debugLog(err);
             }
@@ -1565,7 +1714,7 @@ setInterval(function () {
         hasScrolled();
         didScroll = false;
     }
-}, 50);
+}, 20);
 
 function hasScrolled() {
     var st = $(this).scrollTop();
