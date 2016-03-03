@@ -7,26 +7,67 @@
 4. Elements
 5. Extra
 -------------------------------------------------------------------*/
+
 @media only screen 
 and (min-device-width : 320px) 
-and (max-device-width : 568px) { 
+and (max-device-width : 480px) 
+and (orientation : portrait) { 
+
+    .largeIcon
+    {
+        display: none !important;;
+        
+    }
+    .topMenuSection
+    {
+        height: 30px !important;;
+    }
+    
+    .bodyFeedback
+    {
+        padding-top: 0px !important;
+    }
+    .topMenu
+    {
+        height: 98px !important;
+    }
+    
+    #fixedMenuBottom
+    {
+        height: 50px !important;
+    }
+    
+    .fixedMenuButton 
+    {
+        height:30px !important;
+    
+    }
+    
+}
+
+
+@media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 568px) 
+and (orientation : portrait) 
+{ 
 
 .sliderDivContainer {
-    height: 55px;
+    height: 55px !important;
 }
 .pageControlDiv
 {
-    height:45px;
+    height:45px !important;
 }
 
 .reportSquareBig
 {
-    width:110px;
+    width:110px !important;
 }
 
 .reportSquareMedium
 {
-    width:110px;
+    width:110px !important;
 }
 
 
