@@ -2385,17 +2385,17 @@ html.w-mod-js *[data-ix="list-item"] {
     }
      .bodyFeedback
     {
-        padding-top: 50px;
+        padding-top: 70px;
     }
      #fixedMenuBottom
     {
-        height: 80px;
+        height: 100px;
     }
     
     .fixedMenuButton 
     {
         height:100%;
-    
+        padding-top: 15px;
     }
      .sliderDivContainer {
     height: 55px;

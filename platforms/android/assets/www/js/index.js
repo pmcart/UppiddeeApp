@@ -94,23 +94,6 @@ var app = {
     init: function () {
 
         var networkState = window.navigator.onLine;
-/*
-                    <link rel="stylesheet" type="text/css" href="css/normalize.css">
-    <link rel="stylesheet" type="text/css" href="css/framework.css">
-    <link rel="stylesheet" type="text/css" href="css/styles.css">
-    <link rel="stylesheet" type="text/css" href="css/bootstrap-slider.css">
-    <link rel="shortcut icon" type="image/x-icon" href="images/logo.ico">
-    <link rel="apple-touch-icon" href="images/logo.ico">
-
-   
-    <link href="css/ionicons.min.css" rel="stylesheet" type="text/css" />
-    <link href="css/default.css" rel=stylesheet type="text/css" />
-    <link href="css/default.date.css" rel=stylesheet type="text/css"/>
-    <link href="css/sweetalert.css" rel="stylesheet" type="text/css"/>*/
-    
-        anyscreen(['../css/framework.css','../css/styles.css'],function(){
-            /* do your stuff */
-        });
 
         //526088034082
 
