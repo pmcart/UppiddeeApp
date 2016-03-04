@@ -4,6 +4,9 @@
         <param name="browser-package" value="Camera" />
     </feature>
     <preference name="AndroidPersistentFileLocation" value="Internal" />
+    <feature name="Device">
+        <param name="browser-package" value="Device" />
+    </feature>
     <name>Uppiddee</name>
     <description>
             Uppiddee Feedback App

@@ -300,6 +300,14 @@ module.exports = [
         "clobbers": [
             "PushNotification"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-device/www/device.js",
+        "id": "cordova-plugin-device.device",
+        "pluginId": "cordova-plugin-device",
+        "clobbers": [
+            "device"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -313,7 +321,8 @@ module.exports.metadata =
     "cordova-plugin-intercom": "1.1.4",
     "cordova-plugin-media-capture": "1.1.1-dev",
     "cordova-plugin-whitelist": "1.2.0",
-    "phonegap-plugin-push": "1.5.3"
+    "phonegap-plugin-push": "1.5.3",
+    "cordova-plugin-device": "1.1.1"
 }
 // BOTTOM OF METADATA
 });

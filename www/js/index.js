@@ -95,8 +95,6 @@ var app = {
 
         var networkState = window.navigator.onLine;
 
-  
-
         //526088034082
 
         var push = PushNotification.init({

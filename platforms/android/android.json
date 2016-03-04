@@ -35,6 +35,10 @@
                         {
                             "xml": "<feature name=\"PushNotification\"><param name=\"android-package\" value=\"com.adobe.phonegap.push.PushPlugin\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Device\"><param name=\"android-package\" value=\"org.apache.cordova.device.Device\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -153,6 +157,9 @@
             "PACKAGE_NAME": "com.uppiddee.insights"
         },
         "phonegap-plugin-push": {
+            "PACKAGE_NAME": "com.uppiddee.insights"
+        },
+        "cordova-plugin-device": {
             "PACKAGE_NAME": "com.uppiddee.insights"
         }
     },
@@ -458,6 +465,14 @@
             "clobbers": [
                 "PushNotification"
             ]
+        },
+        {
+            "file": "plugins/cordova-plugin-device/www/device.js",
+            "id": "cordova-plugin-device.device",
+            "pluginId": "cordova-plugin-device",
+            "clobbers": [
+                "device"
+            ]
         }
     ],
     "plugin_metadata": {
@@ -469,6 +484,7 @@
         "cordova-plugin-intercom": "1.1.4",
         "cordova-plugin-media-capture": "1.1.1-dev",
         "cordova-plugin-whitelist": "1.2.0",
-        "phonegap-plugin-push": "1.5.3"
+        "phonegap-plugin-push": "1.5.3",
+        "cordova-plugin-device": "1.1.1"
     }
 }

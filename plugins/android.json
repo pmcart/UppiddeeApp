@@ -4,7 +4,18 @@
         "uninstalled": []
     },
     "config_munge": {
-        "files": {}
+        "files": {
+            "res/xml/config.xml": {
+                "parents": {
+                    "/*": [
+                        {
+                            "xml": "<feature name=\"Device\"><param name=\"android-package\" value=\"org.apache.cordova.device.Device\" /></feature>",
+                            "count": 1
+                        }
+                    ]
+                }
+            }
+        }
     },
     "installed_plugins": {
         "com.hiddentao.cordova.filepath": {
@@ -32,6 +43,9 @@
             "PACKAGE_NAME": "com.uppiddee.insights"
         },
         "phonegap-plugin-push": {
+            "PACKAGE_NAME": "com.uppiddee.insights"
+        },
+        "cordova-plugin-device": {
             "PACKAGE_NAME": "com.uppiddee.insights"
         }
     },
